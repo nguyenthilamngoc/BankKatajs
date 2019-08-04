@@ -1,17 +1,19 @@
 // @flow
 
 import type { Transaction, Account } from '../bank-kata';
-// import * as BankKata from '../bank-kata';
 import BankKata from '../bank-kata';
 
 describe('Bank kata', () => {
+    const DEPOSIT = 'DEPOSIT';
+    const WITHDRAWAL = 'WITHDRAWAL';
+
     afterEach(() => {
         jest.restoreAllMocks();
     });
 
     it('should make a deposit transaction on the account', () => {
         //given
-        const depositTr: Transaction = { amount: 1000, date: '03/08/2019', type: 'DEPOSIT' }
+        const depositTr: Transaction = { amount: 1000, date: '03/08/2019', type: DEPOSIT }
         const account: Account = { listTransactions: [] };
 
         //when
@@ -36,13 +38,13 @@ describe('Bank kata', () => {
         expect(updatedAccount.listTransactions).toHaveLength(1);
         expect(updatedAccount.listTransactions[0].amount).toEqual(depositAmount);
         expect(updatedAccount.listTransactions[0].date).toEqual(today);
-        expect(updatedAccount.listTransactions[0].type).toEqual('DEPOSIT');
+        expect(updatedAccount.listTransactions[0].type).toEqual(DEPOSIT);
     });
 
     it('should make a withdrawal transaction from the account', () => {
         //given
-        const withdrawalTr: Transaction = { amount: 100, date: '03/08/2019', type: 'WITHDRAWAL' }
-        const depositTr: Transaction = { amount: 1000, date: '03/08/2019', type: 'DEPOSIT' }
+        const withdrawalTr: Transaction = { amount: 100, date: '03/08/2019', type: WITHDRAWAL }
+        const depositTr: Transaction = { amount: 1000, date: '03/08/2019', type: DEPOSIT }
         const account: Account = { listTransactions: [depositTr] };
 
         //when
@@ -59,7 +61,7 @@ describe('Bank kata', () => {
         const today = '03/08/2019';
 
         jest.spyOn(BankKata, 'dateToString').mockReturnValue(today);
-        const depositTr: Transaction = { amount: 1000, date: today, type: 'DEPOSIT' }
+        const depositTr: Transaction = { amount: 1000, date: today, type: DEPOSIT }
         const account: Account = { listTransactions: [depositTr] };
 
         //when
@@ -69,7 +71,7 @@ describe('Bank kata', () => {
         expect(updatedAccount.listTransactions).toHaveLength(2);
         expect(updatedAccount.listTransactions[1].amount).toEqual(withdrawalAmount);
         expect(updatedAccount.listTransactions[1].date).toEqual(today);
-        expect(updatedAccount.listTransactions[1].type).toEqual('WITHDRAWAL');
+        expect(updatedAccount.listTransactions[1].type).toEqual(WITHDRAWAL);
 
     });
 
@@ -84,9 +86,9 @@ describe('Bank kata', () => {
 
     it('should return the history of account', () => {
         //given
-        const withdrawalTr3: Transaction = { amount: 200, date: '04/08/2019', type: 'WITHDRAWAL' }
-        const withdrawalTr2: Transaction = { amount: 100, date: '03/08/2019', type: 'WITHDRAWAL' }
-        const depositTr1: Transaction = { amount: 1000, date: '01/08/2019', type: 'DEPOSIT' }
+        const withdrawalTr3: Transaction = { amount: 200, date: '04/08/2019', type: WITHDRAWAL }
+        const withdrawalTr2: Transaction = { amount: 100, date: '03/08/2019', type: WITHDRAWAL }
+        const depositTr1: Transaction = { amount: 1000, date: '01/08/2019', type: DEPOSIT }
         const account: Account = { listTransactions: [depositTr1, withdrawalTr2, withdrawalTr3] };
 
         //when
